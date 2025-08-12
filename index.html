@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+<!-- Поле для ввода исходного текста -->
+<input id="text" placeholder="Введите текст"><br><br>
+
+<!-- Выбор языка с которого переводим -->
+<select id="from">
+  <option value="ru">RU</option>
+  <option value="en">EN</option>
+  <option value="uz">UZ</option>
+</select>
+
+→
+
+<!-- Выбор языка на который переводим -->
+<select id="to">
+  <option value="en">EN</option>
+  <option value="ru">RU</option>
+  <option value="uz">UZ</option>
+</select>
+
+<button onclick="tr()">Перевести</button>
+
+<input id="result" placeholder="Перевод" readonly><br><br>
+
+<script>
+async function tr(){
+  let t = document.getElementById("text").value; 
+  let f = document.getElementById("from").value; 
+  let to = document.getElementById("to").value;  
+
+  let r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=${f}|${to}`);
+
+  let d = await r.json(); 
+  document.getElementById("result").value = d.responseData.translatedText; 
+}
+</script>
+
+</body>
+</html>
